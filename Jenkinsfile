@@ -31,13 +31,13 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-				sh "docker build -t sonalieta/bank-eta-app:V${BUILD_NUMBER} ."
+				sh "docker build -t sonalieta/nbank-project-app:V${BUILD_NUMBER} ."
 				sh 'docker image list'
             }
               post {
                 success {
                   sh "echo 'Send mail docker Build Success'"
-                  mail to:"sona28392@gmail.com", from: 'sona28392@gmail.com', subject:"App Image Created Please validate", body: "App Image Created Please validate - sonalieta/bank-project1-app:V${BUILD_NUMBER}"
+                  mail to:"sona28392@gmail.com", from: 'sona28392@gmail.com', subject:"App Image Created Please validate", body: "App Image Created Please validate - sonalieta/nbank-project-app:V${BUILD_NUMBER}"
                 }
                 failure {
                   sh "echo 'Send mail docker Build failure'"
@@ -63,7 +63,7 @@ pipeline {
 		}
 		stage('Publish_to_Docker_Registry') {
 			steps {
-				sh "docker push sonalieta/bank-project1-app:V${BUILD_NUMBER}"
+				sh "docker push sonalieta/nbank-project-app:V${BUILD_NUMBER}"
 			}
 		}
 		stage('Deploy to Kubernetes_Cluster') {
