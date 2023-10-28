@@ -63,7 +63,7 @@ pipeline {
 		}
 		stage('Publish_to_Docker_Registry') {
 			steps {
-				sh "docker push sonalieta/bankapp2-eta-app:latest"
+				sh "docker push sonalieta/bankapp2-eta-app:V${BUILD_NUMBER}"
 			}
 		}
 		stage('Deploy to Kubernetes_Cluster') {
