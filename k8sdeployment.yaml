@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: bankapp-eta-container
-        image: sonalieta/bankapp-eta-app:latest
+        image: sonalieta/bankapp-eta-app:V${BUILD_NUMBER}
         ports:
         - containerPort: 8081
 ---
