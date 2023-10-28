@@ -33,7 +33,6 @@ pipeline {
             steps {
 				sh "docker build -t sonalieta/bankapp-eta-app:V${BUILD_NUMBER} ."
 				sh 'docker image list'
-				sh "docker tag sonalieta/bankapp-eta-app:V${BUILD_NUMBER} sonalieta/bankapp-eta-app:latest"
             }
               post {
                 success {
@@ -64,7 +63,7 @@ pipeline {
 		}
 		stage('Publish_to_Docker_Registry') {
 			steps {
-				sh "docker push sonalieta/bankapp-eta-app:latest"
+				sh "docker push sonalieta/bankapp-eta-app:V${BUILD_NUMBER}"
 			}
 		}
 		stage('Deploy to Kubernetes_Cluster') {
