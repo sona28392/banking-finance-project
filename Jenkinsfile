@@ -37,7 +37,7 @@ pipeline {
               post {
                 success {
                   sh "echo 'Send mail docker Build Success'"
-                  mail to:"sonalieta@gmail.com", from: 'sonalieta@gmail.com', subject:"App Image Created Please validate", body: "App Image Created Please validate - sonalieta/bankapp-eta-app:latest"
+                  mail to:"sonalieta@gmail.com", from: 'sonalieta@gmail.com', subject:"App Image Created Please validate", body: "App Image Created Please validate - sonalieta/bankapp-eta-app:V${BUILD_NUMBER}"
                 }
                 failure {
                   sh "echo 'Send mail docker Build failure'"
