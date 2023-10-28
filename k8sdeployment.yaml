@@ -1,37 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nbank-project-deploy
+  name: bankapp-eta-deploy
   labels:
-    app: nbank-project-app1
+    app: bankapp-eta-app1
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: nbank-project-app
+      app: bankapp-eta-app
   template:
     metadata:
       labels:
-        app: nbank-project-app
+        app: bankapp-eta-app
     spec:
       containers:
-      - name: nbank-project-container
-        image: sonalieta/nbank-project-app:latest
+      - name: bankapp-eta-container
+        image: loksaieta/bankapp-eta-app:latest
         ports:
         - containerPort: 8081
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nbank-project-np-service1
+  name: bankapp-eta-np-service1
   labels:
-    app: nbank-project-app1
+    app: bankapp-eta-app1
 spec:
   selector:
-    app: nbank-project-app
+    app: bankapp-eta-app
 
   type: NodePort
   ports:
-  - nodePort: 31001    
+  - nodePort: 30111    
     port: 8081
     targetPort: 8081
