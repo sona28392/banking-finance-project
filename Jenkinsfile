@@ -1,6 +1,6 @@
 pipeline {
 
-    agent { label 'javaslave1' }
+    agent { label 'slave1' }
 	
     tools {
         maven "maven_3.6.3"
@@ -14,7 +14,7 @@ pipeline {
         stage('SCM_Checkout') {
             steps {
                 echo 'Perform SCM Checkout'
-				git 'https://github.com/sona28392/banking-finance-project.git'
+				git 'https://github.com/sona28392/star-agile-banking-finance.git'
             }
         }
         stage('Application_Build') {
@@ -31,13 +31,13 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-				sh "docker build -t sonalieta/nbank-project-app:V${BUILD_NUMBER} ."
+				sh "docker build -t sonalieta/bank-eta-app:V${BUILD_NUMBER} ."
 				sh 'docker image list'
             }
               post {
                 success {
                   sh "echo 'Send mail docker Build Success'"
-                  mail to:"sona28392@gmail.com", from: 'sona28392@gmail.com', subject:"App Image Created Please validate", body: "App Image Created Please validate - sonalieta/nbank-project-app:V${BUILD_NUMBER}"
+                  mail to:"sona28392@gmail.com", from: 'sona28392@gmail.com', subject:"App Image Created Please validate", body: "App Image Created Please validate - sonalieta/bank-project1-app:V${BUILD_NUMBER}"
                 }
                 failure {
                   sh "echo 'Send mail docker Build failure'"
@@ -63,13 +63,13 @@ pipeline {
 		}
 		stage('Publish_to_Docker_Registry') {
 			steps {
-				sh "docker push sonalieta/nbank-project-app:V${BUILD_NUMBER}"
+				sh "docker push sonalieta/bank-project1-app:V${BUILD_NUMBER}"
 			}
 		}
 		stage('Deploy to Kubernetes_Cluster') {
 			steps {
 				script {
-					sshPublisher(publishers: [sshPublisherDesc(configName: 'kubernetes', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'kubectl apply -f k8sdeployment.yaml', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.yaml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
+					sshPublisher(publishers: [sshPublisherDesc(configName: 'kubernetes', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'kubectl -f apply k8sdeployment.yaml', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.yaml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
 				}
 			}
 		}
