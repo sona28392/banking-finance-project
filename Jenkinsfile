@@ -14,7 +14,7 @@ pipeline {
         stage('SCM_Checkout') {
             steps {
                 echo 'Perform SCM Checkout'
-				git 'https://github.com/sona28392/star-agile-banking-finance.git'
+				git 'https://github.com/sona28392/banking-finance-project.git'
             }
         }
         stage('Application_Build') {
